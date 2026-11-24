@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Factorial, sum, and average of the first N natural numbers" />
+  <title>Arithmetic</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="unit-conversion.html">Unit Conversion</a>
+        <a class="nav-link" href="income-tax-calculator.html">Income Tax</a>
+        <a class="nav-link active" href="arithmetic.html" aria-current="page">Arithmetic</a>
+        <a class="nav-link" href="simple-payroll.html">Simple Payroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header">
+      <h1>Arithmetic</h1>
+      <p>Calculate the factorial, sum, and average of the first N natural numbers.</p>
+    </header>
+
+    <div class="grid-two">
+      <section class="card">
+        <div class="card-header">
+          <span>01 / Input</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="arithmetic-n-input">Enter N (Natural Number)</label>
+          <div class="input-row">
+            <input id="arithmetic-n-input" type="number" min="1" step="1" placeholder="Enter a value for N" aria-label="Natural number N" />
+            <span class="input-addon right">N</span>
+          </div>
+          <p id="arithmetic-help" class="help-text">Use a positive whole number (1, 2, 3, …).</p>
+        </div>
+
+        <button id="arithmetic-calc-btn" class="btn btn-full" type="button">Calculate</button>
+
+        <div class="note-box">
+          <strong>How it works:</strong> Calculations use the numbers 1 through N.
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <span>02 / Results</span>
+          <span class="badge">OUTPUT</span>
+        </div>
+
+        <div class="stat-row">
+          <div>
+            <strong>Factorial</strong>
+            <small>N! = 1 × 2 × … × N</small>
+          </div>
+          <b id="res-factorial">—</b>
+        </div>
+
+        <div class="stat-row">
+          <div>
+            <strong>Sum</strong>
+            <small>N × (N + 1) / 2</small>
+          </div>
+          <b id="res-sum">—</b>
+        </div>
+
+        <div class="stat-row">
+          <div>
+            <strong>Average</strong>
+            <small>(N + 1) / 2</small>
+          </div>
+          <b id="res-average">—</b>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const inputEl = document.getElementById("arithmetic-n-input");
+      const helpEl = document.getElementById("arithmetic-help");
+      const calcBtn = document.getElementById("arithmetic-calc-btn");
+      const resFactorial = document.getElementById("res-factorial");
+      const resSum = document.getElementById("res-sum");
+      const resAverage = document.getElementById("res-average");
+
+      function handleCalculate() {
+        const n = Number(inputEl.value);
+        if (!Number.isInteger(n) || n < 1 || n > 170) {
+          helpEl.textContent = "Enter a whole number from 1 to 170.";
+          helpEl.classList.add("error");
+          resFactorial.textContent = "—";
+          resSum.textContent = "—";
+          resAverage.textContent = "—";
+          return;
+        }
+
+        let factorial = 1;
+        let factor = 1;
+        while (factor <= n) {
+          factorial *= factor;
+          factor += 1;
+        }
+
+        let sum = 0;
+        let addend = 1;
+        do {
+          sum += addend;
+          addend += 1;
+        } while (addend <= n);
+
+        let total = 0;
+        for (let number = 1; number <= n; number += 1) {
+          total += number;
+        }
+
+        const average = total / n;
+
+        helpEl.textContent = "Use a positive whole number (1, 2, 3, …).";
+        helpEl.classList.remove("error");
+        resFactorial.textContent = factorial.toLocaleString("en-US");
+        resSum.textContent = sum.toLocaleString("en-US");
+        resAverage.textContent = average.toLocaleString("en-US");
+      }
+
+      calcBtn.addEventListener("click", handleCalculate);
+
+      inputEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleCalculate();
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>
